@@ -14,6 +14,7 @@ class Text;
 class Image;
 class Button;
 class InputBox;
+class Window;
 //class Slider;
 
 enum event_type
@@ -66,6 +67,8 @@ public:
 	Button* createCheckBox(int x, int y, SDL_Texture* texture, SDL_Rect standby, SDL_Rect OnClick, SDL_Rect Tick, j1Module* callback = nullptr);
 	//NULL texture to use atlas
 	InputBox* createInputBox(_TTF_Font* font, SDL_Color color, int x, int y, SDL_Texture* texture, SDL_Rect section, j1Module* callback = nullptr);
+
+	Window* createWindow(int x, int y, SDL_Texture* texture, SDL_Rect section, j1Module* callback = nullptr);
 
 private:
 

@@ -14,6 +14,7 @@
 #include "UI_element.h"
 #include "UI_Text.h"
 #include "UI_Button.h"
+#include "UI_Window.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -42,7 +43,9 @@ bool j1Scene::Start()
 	App->gui->createImage(0, 0, App->tex->Load("textures/login_background.png")); //Background Image
 	button = App->gui->createButton(100, 100, NULL, { 642,169,229,69 }, { 0,113,229,69 }, { 411,169,229,69 }, this);
 	button->appendChild(70, 25, new Text("Test Text", 0, 0, text_font, text_color, this));
-	text = App->gui->createText("Hello World", 120, 80, text_font, text_color, this);
+	window = App->gui->createWindow(100, 100, NULL, { 22, 532, 440, 470 }, this);
+	window->appendChild(100, 100, button);
+	window->appendChild(100, 20, new Text("Hello World", 120, 80, text_font, text_color, this));
 	//Window (22, 532, 440, 470)
 
 	/*App->gui->createImageFromAtlas(10, 10, { 230, 19, 179, 80 }); //Wow Logo

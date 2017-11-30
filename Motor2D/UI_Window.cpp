@@ -1,9 +1,12 @@
 #include "j1App.h"
 #include "UI_Window.h"
+#include "j1App.h"
+#include "j1Render.h"
 #include "p2Defs.h"
+#include "j1Gui.h"
 #include "j1Render.h"
 
-UI_Window::~UI_Window()
+Window::~Window()
 {
 	p2List_item<UI_element*>* item;
 	item = content.start;
@@ -15,14 +18,15 @@ UI_Window::~UI_Window()
 	content.clear();
 }
 
-void UI_Window::appendChild(int x, int y, UI_element * child)
+void Window::appendChild(int x, int y, UI_element * child)
 {
 	child->localPosition = { x, y };
 	child->parent = this;
 	content.add(child);
+	
 }
 
-void UI_Window::BlitElement()
+void Window::BlitElement()
 {
 	iPoint globalPos = calculateAbsolutePosition();
 	App->render->Blit(texture, globalPos.x, globalPos.y, &section, false);
