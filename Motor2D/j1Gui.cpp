@@ -219,11 +219,11 @@ InputBox* j1Gui::createInputBox(_TTF_Font* font, SDL_Color color, int x, int y, 
 	return ret;
 }
 
-Button* j1Gui::createButton(char* text, _TTF_Font* font, SDL_Color color, int x, int y, SDL_Texture* texture, SDL_Rect standby, SDL_Rect OnMouse, SDL_Rect OnClick, j1Module* callback)
+Button* j1Gui::createButton(int x, int y, SDL_Texture* texture, SDL_Rect standby, SDL_Rect OnMouse, SDL_Rect OnClick, j1Module* callback)
 {
 	SDL_Texture* usingTexture = (texture) ? texture : atlas;
 	
-	Button* ret = new Button(text, font, color, x, y, usingTexture, standby, OnMouse, OnClick, LINK, callback);
+	Button* ret = new Button(x, y, usingTexture, standby, OnMouse, OnClick, LINK, callback);
 	UI_elements.add(ret);
 	
 	return ret;

@@ -5,6 +5,7 @@
 
 struct SDL_Texture;
 class Text;
+class Button;
 
 class j1Scene : public j1Module
 {
@@ -38,6 +39,7 @@ public:
 private:
 	SDL_Texture* debug_tex;
 	Text* text;
+	Button* button;
 };
 
 #endif // __j1SCENE_H__

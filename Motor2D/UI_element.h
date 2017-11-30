@@ -15,7 +15,8 @@ enum element_type
 	IMAGE,
 	BUTTON,
 	//SLIDER,
-	INPUTTEXT
+	INPUTTEXT,
+	WINDOW
 };
 
 enum element_state

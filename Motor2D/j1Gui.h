@@ -61,7 +61,7 @@ public:
 	Image* createImage(int x, int y, SDL_Texture* texture, j1Module* callback = nullptr);
 	Image* createImageFromAtlas(int x, int y, SDL_Rect section, j1Module* callback = nullptr);
 	//NULL texture to use atlas
-	Button* createButton(char* text, _TTF_Font* font, SDL_Color color, int x, int y, SDL_Texture* texture, SDL_Rect standby, SDL_Rect OnMouse, SDL_Rect OnClick, j1Module* callback = nullptr);
+	Button* createButton(int x, int y, SDL_Texture* texture, SDL_Rect standby, SDL_Rect OnMouse, SDL_Rect OnClick, j1Module* callback = nullptr);
 	//NULL texture to use atlas
 	Button* createCheckBox(int x, int y, SDL_Texture* texture, SDL_Rect standby, SDL_Rect OnClick, SDL_Rect Tick, j1Module* callback = nullptr);
 	//NULL texture to use atlas

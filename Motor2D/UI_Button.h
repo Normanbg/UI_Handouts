@@ -16,24 +16,18 @@ public:
 	Button()
 	{}
 
-	Button(char* text, _TTF_Font* font, SDL_Color color, int x, int y, SDL_Texture* texture, SDL_Rect standby, SDL_Rect OnMouse, SDL_Rect OnClick, button_type type, j1Module* callback) : UI_element(x, y, element_type::BUTTON, standby, callback, texture),
+	Button(int x, int y, SDL_Texture* texture, SDL_Rect standby, SDL_Rect OnMouse, SDL_Rect OnClick, button_type type, j1Module* callback) : UI_element(x, y, element_type::BUTTON, standby, callback, texture),
 		OnMouse(OnMouse),
 		Tick(OnMouse),
 		OnClick(OnClick),
 		type(type)
 	{
-		this->text = new Text(text, localPosition.x, localPosition.y, font, color, nullptr);
 	}
-
-	Button(int x, int y, SDL_Texture* texture, SDL_Rect standby, SDL_Rect OnClick, SDL_Rect Tick, button_type type, j1Module* callback) : UI_element(x, y, element_type::BUTTON, standby, callback, texture),
-		Tick(Tick),
-		OnClick(OnClick),
-		type(type)
-	{}
 
 	~Button();
 
 	void setOutlined(bool isOutlined);
+	void appendChild(int x, int y, UI_element* child);
 	void BlitElement();
 
 public:

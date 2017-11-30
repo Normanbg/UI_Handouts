@@ -13,6 +13,7 @@
 #include "j1Fonts.h"
 #include "UI_element.h"
 #include "UI_Text.h"
+#include "UI_Button.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -39,8 +40,10 @@ bool j1Scene::Start()
 	_TTF_Font* text_font = App->font->Load("fonts/wow/FRIZQUAD.ttf", 15);
 
 	App->gui->createImage(0, 0, App->tex->Load("textures/login_background.png")); //Background Image
-	App->gui->createButton("", text_font, text_color, 100, 100, NULL, { 642,169,229,69 }, { 0,113,229,69 }, { 411,169,229,69 }, this);
+	button = App->gui->createButton(100, 100, NULL, { 642,169,229,69 }, { 0,113,229,69 }, { 411,169,229,69 }, this);
+	button->appendChild(70, 25, new Text("Test Text", 0, 0, text_font, text_color, this));
 	text = App->gui->createText("Hello World", 120, 80, text_font, text_color, this);
+	//Window (22, 532, 440, 470)
 
 	/*App->gui->createImageFromAtlas(10, 10, { 230, 19, 179, 80 }); //Wow Logo
 	App->gui->createImageFromAtlas(430, 470, { 39, 32, 66, 43 }); //Blizzard Logo

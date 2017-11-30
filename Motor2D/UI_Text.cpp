@@ -64,9 +64,11 @@ void Text::setOutlineColor(SDL_Color newColor)
 
 void Text::BlitElement()
 {
+	iPoint globalPos = calculateAbsolutePosition();
+
 	if (outlined)
-		App->render->Blit(outline, localPosition.x + outline_offset.x, localPosition.y + outline_offset.y, NULL, false);
-	App->render->Blit(texture, localPosition.x, localPosition.y, NULL, false);
+		App->render->Blit(outline, globalPos.x + outline_offset.x, globalPos.y + outline_offset.y, NULL, false);
+	App->render->Blit(texture, globalPos.x, globalPos.y, NULL, false);
 }
 
 void Text::setOutlined(bool isOutlined)

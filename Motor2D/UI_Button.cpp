@@ -17,6 +17,13 @@ void Button::setOutlined(bool isOutlined)
 		text->setOutlined(isOutlined);
 }
 
+void Button::appendChild(int x, int y, UI_element * child)
+{
+	child->localPosition = { x, y };
+	child->parent = this;
+	text = (Text*)child;
+}
+
 void Button::BlitElement()
 {
 	switch (state)
@@ -36,11 +43,8 @@ void Button::BlitElement()
 	{
 		App->render->Blit(texture, localPosition.x, localPosition.y, &Tick, false);
 	}
-	else if (type == LINK)
-	{
-		text->localPosition.x = localPosition.x + section.w / 2 - text->tex_width / 2;
-		text->localPosition.y = localPosition.y + section.h / 2 - text->tex_height / 2;
-		
+	else if (type == LINK && text != nullptr)
+	{		
 		text->BlitElement();
 	}
 }
