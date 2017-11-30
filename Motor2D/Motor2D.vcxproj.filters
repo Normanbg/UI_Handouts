@@ -61,7 +61,9 @@
     <ClCompile Include="UI_Button.cpp">
       <Filter>Desenvolupament  ========\Modules\UI Elements</Filter>
     </ClCompile>
-    <ClCompile Include="UI_Window.cpp" />
+    <ClCompile Include="UI_Window.cpp">
+      <Filter>Desenvolupament  ========\Modules\UI Elements</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -145,7 +147,9 @@
     <ClInclude Include="UI_InputBox.h">
       <Filter>Desenvolupament  ========\Modules\UI Elements</Filter>
     </ClInclude>
-    <ClInclude Include="UI_Window.h" />
+    <ClInclude Include="UI_Window.h">
+      <Filter>Desenvolupament  ========\Modules\UI Elements</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Programacio 2 ===========">
