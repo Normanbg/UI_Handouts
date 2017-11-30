@@ -129,7 +129,9 @@ bool j1Gui::Update(float dt)
 			}
 		}
 	}
-	DebugDraw();
+
+	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+		UI_Debug = !UI_Debug;
 
 	return true;
 }
@@ -142,6 +144,8 @@ bool j1Gui::PostUpdate()
 		item->data->BlitElement();
 	}
 
+	if (UI_Debug)
+		DebugDraw();
 	/*for (p2List_item<inputBox*>* item = inputTexts.start; item; item = item->next) //Input Text reading
 	{
 		if (item->data->reading)
@@ -173,15 +177,14 @@ bool j1Gui::CleanUp()
 
 void j1Gui::DebugDraw()
 {
-	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
-		UI_Debug = !UI_Debug;
-
-	if (UI_Debug == false)
-		return;
 	for (p2List_item<UI_element*>* item = UI_elements.start; item; item = item->next)
 	{
-
-		App->render->DrawQuad(item->data->section, 255, 0, 0, 255, false);
+		SDL_Rect box;
+		box.x = item->data->calculateAbsolutePosition().x;
+		box.y = item->data->calculateAbsolutePosition().y;
+		box.w = item->data->section.w;
+		box.h = item->data->section.h;
+		App->render->DrawQuad(box, 255, 0, 0, 255, false);
 	}
 
 }
