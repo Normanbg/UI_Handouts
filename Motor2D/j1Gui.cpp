@@ -44,53 +44,13 @@ bool j1Gui::Start()
 // Update all guis
 bool j1Gui::PreUpdate()
 {
-	/*if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-	{
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		for (p2List_item<Button*>* item = buttons.start; item; item = item->next) //Buttons
-		{
-			if (x > item->data->localPosition.x && x < item->data->localPosition.x + item->data->standby.w && y > item->data->localPosition.y && y < item->data->localPosition.y + item->data->standby.h)
-			{
-				item->data->clicked = true;
-				if (item->data->type == CHECKBOX)
-				{
-					item->data->tick = !item->data->tick;
-				}
-				break;
-			}
-		}
-		for (p2List_item<inputBox*>* item = inputTexts.start; item; item = item->next) //Input Text
-		{
-			if (x > item->data->localPosition.x && x < item->data->localPosition.x + item->data->box.w && y > item->data->localPosition.y && y < item->data->localPosition.y + item->data->box.h)
-			{
-				item->data->reading = true;
-				SDL_StartTextInput();
-			}
-		}
-	}
-	else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
-	{
-		for (p2List_item<Button*>* item = buttons.start; item; item = item->next)
-		{
-			if (item->data->clicked)
-			{
-				item->data->clicked = false;
-				break;
-			}
-		}
-	}*/
-
-	return true;
-}
-
-bool j1Gui::Update(float dt)
-{
+	//Send events related to UI elements
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	for (p2List_item<UI_element*>* item = UI_elements.start; item; item = item->next)
 	{
-		if (x > item->data->localPosition.x && x < item->data->localPosition.x + item->data->section.w && y > item->data->localPosition.y && y < item->data->localPosition.y + item->data->section.h)
+		iPoint globalPos = item->data->calculateAbsolutePosition();
+		if (x > globalPos.x && x < globalPos.x + item->data->section.w && y > globalPos.y && y < globalPos.y + item->data->section.h)
 		{
 			if (!item->data->hovering)
 			{
@@ -130,6 +90,13 @@ bool j1Gui::Update(float dt)
 		}
 	}
 
+	return true;
+}
+
+bool j1Gui::Update(float dt)
+{
+	
+
 	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
 		UI_Debug = !UI_Debug;
 
@@ -141,7 +108,8 @@ bool j1Gui::PostUpdate()
 {	
 	for (p2List_item<UI_element*>* item = UI_elements.start; item; item = item->next)
 	{
-		item->data->BlitElement();
+		if (item->data->parent == nullptr)
+			item->data->BlitElement();
 	}
 
 	if (UI_Debug)
@@ -194,73 +162,66 @@ const SDL_Texture* j1Gui::GetAtlas() const
 	return atlas;
 }
 
-Text* j1Gui::createText(char* text, int x, int y, _TTF_Font* font, SDL_Color color, j1Module* callback, bool addToList)
+Text* j1Gui::createText(char* text, int x, int y, _TTF_Font* font, SDL_Color color, j1Module* callback)
 {
 	Text* ret = new Text(text, x, y, font, color, callback);
-	if (addToList)
-		UI_elements.add(ret);
+	UI_elements.add(ret);
 	
 	return ret;
 }
 
-Image* j1Gui::createImage(int x, int y, SDL_Texture* texture, j1Module* callback, bool addToList)
+Image* j1Gui::createImage(int x, int y, SDL_Texture* texture, j1Module* callback)
 {
 	Image* ret = new Image(texture, x, y, {0, 0, 0, 0}, callback);
-	if (addToList)
-		UI_elements.add(ret);
+	UI_elements.add(ret);
 	
 	return ret;
 }
 
-Image* j1Gui::createImageFromAtlas(int x, int y, SDL_Rect section, j1Module* callback, bool addToList)
+Image* j1Gui::createImageFromAtlas(int x, int y, SDL_Rect section, j1Module* callback)
 {
 	Image* ret = new Image(atlas, x, y, section, callback);
-	if (addToList)
-		UI_elements.add(ret);
+	UI_elements.add(ret);
 
 	return ret;
 }
 
-Button* j1Gui::createCheckBox(int x, int y, SDL_Texture* texture, SDL_Rect standby, SDL_Rect OnClick, SDL_Rect Tick, j1Module* callback, bool addToList)
+Button* j1Gui::createCheckBox(int x, int y, SDL_Texture* texture, SDL_Rect standby, SDL_Rect OnClick, SDL_Rect Tick, j1Module* callback)
 {
 	SDL_Texture* usingTexture = (texture) ? texture : atlas;
 
 	Button* ret = new Button(x, y, usingTexture, standby, OnClick, Tick, CHECKBOX, callback);
-	if (addToList)
-		UI_elements.add(ret);
+	UI_elements.add(ret);
 
 	return ret;
 }
 
-InputBox* j1Gui::createInputBox(_TTF_Font* font, SDL_Color color, int x, int y, SDL_Texture * texture, SDL_Rect section, j1Module* callback, bool addToList)
+InputBox* j1Gui::createInputBox(_TTF_Font* font, SDL_Color color, int x, int y, SDL_Texture * texture, SDL_Rect section, j1Module* callback)
 {
 	SDL_Texture* usingTexture = (texture) ? texture : atlas;
 
 	InputBox* ret = new InputBox(font, color, x, y, usingTexture, section, callback);
-	if (addToList)
-		UI_elements.add(ret);
+	UI_elements.add(ret);
 
 	return ret;
 }
 
-Window* j1Gui::createWindow(int x, int y, SDL_Texture * texture, SDL_Rect section, j1Module * callback, bool addToList)
+Window* j1Gui::createWindow(int x, int y, SDL_Texture * texture, SDL_Rect section, j1Module * callback)
 {
 	SDL_Texture* usingTexture = (texture) ? texture : atlas;
 	
 	Window* ret = new Window(usingTexture, x, y, section, callback);
-	if (addToList)
-		UI_elements.add(ret);
+	UI_elements.add(ret);
 
 	return ret;
 }
 
-Button* j1Gui::createButton(int x, int y, SDL_Texture* texture, SDL_Rect standby, SDL_Rect OnMouse, SDL_Rect OnClick, j1Module* callback, bool addToList)
+Button* j1Gui::createButton(int x, int y, SDL_Texture* texture, SDL_Rect standby, SDL_Rect OnMouse, SDL_Rect OnClick, j1Module* callback)
 {
 	SDL_Texture* usingTexture = (texture) ? texture : atlas;
 	
 	Button* ret = new Button(x, y, usingTexture, standby, OnMouse, OnClick, LINK, callback);
-	if (addToList)
-		UI_elements.add(ret);
+	UI_elements.add(ret);
 	
 	return ret;
 }

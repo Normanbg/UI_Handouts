@@ -24,10 +24,12 @@ public:
 	{
 	}
 
-	~Button();
+	~Button()
+	{}
 
 	void setOutlined(bool isOutlined);
 	void appendChild(int x, int y, UI_element* child);
+	void appendChildAtCenter(UI_element* child);
 	void BlitElement();
 
 public:
