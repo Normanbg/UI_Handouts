@@ -41,11 +41,12 @@ bool j1Scene::Start()
 	_TTF_Font* text_font = App->font->Load("fonts/wow/FRIZQUAD.ttf", 15);
 
 	App->gui->createImage(0, 0, App->tex->Load("textures/login_background.png")); //Background Image
-	button = App->gui->createButton(100, 100, NULL, { 642,169,229,69 }, { 0,113,229,69 }, { 411,169,229,69 }, this);
-	button->appendChild(70, 25, new Text("Test Text", 0, 0, text_font, text_color, this));
-	/*window = App->gui->createWindow(100, 100, NULL, { 22, 532, 440, 470 }, this);
+	Button* button = App->gui->createButton(100, 100, NULL, { 642,169,229,69 }, { 0,113,229,69 }, { 411,169,229,69 }, this, false);
+	button->appendChild(70, 25, App->gui->createText("Test Text", 0, 0, text_font, text_color, this, false));
+	
+	window = App->gui->createWindow(100, 100, NULL, { 22, 532, 440, 470 }, this);
 	window->appendChild(100, 100, button);
-	window->appendChild(100, 20, new Text("Hello World", 120, 80, text_font, text_color, this));*/
+	window->appendChild(100, 20, new Text("Hello World", 120, 80, text_font, text_color, this));
 	//Window (22, 532, 440, 470)
 
 	/*App->gui->createImageFromAtlas(10, 10, { 230, 19, 179, 80 }); //Wow Logo
@@ -111,34 +112,17 @@ bool j1Scene::OnUIEvent(UI_element* element, event_type event_type)
 	if (event_type == MOUSE_ENTER || event_type == MOUSE_LEFT_RELEASE || event_type == MOUSE_RIGHT_RELEASE)
 	{
 		element->state = MOUSEOVER;
-		if (element == (UI_element*)text)
-		{
-			text->setText("Hovering");
-		}
 	}
 	else if (event_type == MOUSE_LEAVE)
 	{
 		element->state = STANDBY;
-		if (element == (UI_element*)text)
-		{
-			text->setText("Hello World");
-		}
 	}
 	else if (event_type == MOUSE_LEFT_CLICK)
 	{
 		element->state = CLICKED;
-		if (element == (UI_element*)text)
-		{
-			text->setText("Left click");
-		}
 	}
 	else if (event_type == MOUSE_RIGHT_CLICK)
-	{
-		if (element == (UI_element*)text)
-		{
-			text->setText("Right click");
-		}
-	}
+	{	}
 
 	return true;
 }

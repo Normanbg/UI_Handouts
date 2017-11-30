@@ -57,17 +57,17 @@ public:
 	void DebugDraw();
 	// Gui creation functions
 	const SDL_Texture* GetAtlas() const;
-	Text* createText(char* text, int x, int y, _TTF_Font* font, SDL_Color color = { 255, 255, 255, 255 }, j1Module* callback = nullptr);
-	Image* createImage(int x, int y, SDL_Texture* texture, j1Module* callback = nullptr);
-	Image* createImageFromAtlas(int x, int y, SDL_Rect section, j1Module* callback = nullptr);
+	Text* createText(char* text, int x, int y, _TTF_Font* font, SDL_Color color = { 255, 255, 255, 255 }, j1Module* callback = nullptr, bool addToList = true);
+	Image* createImage(int x, int y, SDL_Texture* texture, j1Module* callback = nullptr, bool addToList = true);
+	Image* createImageFromAtlas(int x, int y, SDL_Rect section, j1Module* callback = nullptr, bool addToList = true);
 	//NULL texture to use atlas
-	Button* createButton(int x, int y, SDL_Texture* texture, SDL_Rect standby, SDL_Rect OnMouse, SDL_Rect OnClick, j1Module* callback = nullptr);
+	Button* createButton(int x, int y, SDL_Texture* texture, SDL_Rect standby, SDL_Rect OnMouse, SDL_Rect OnClick, j1Module* callback = nullptr, bool addToList = true);
 	//NULL texture to use atlas
-	Button* createCheckBox(int x, int y, SDL_Texture* texture, SDL_Rect standby, SDL_Rect OnClick, SDL_Rect Tick, j1Module* callback = nullptr);
+	Button* createCheckBox(int x, int y, SDL_Texture* texture, SDL_Rect standby, SDL_Rect OnClick, SDL_Rect Tick, j1Module* callback = nullptr, bool addToList = true);
 	//NULL texture to use atlas
-	InputBox* createInputBox(_TTF_Font* font, SDL_Color color, int x, int y, SDL_Texture* texture, SDL_Rect section, j1Module* callback = nullptr);
+	InputBox* createInputBox(_TTF_Font* font, SDL_Color color, int x, int y, SDL_Texture* texture, SDL_Rect section, j1Module* callback = nullptr, bool addToList = true);
 
-	Window* createWindow(int x, int y, SDL_Texture* texture, SDL_Rect section, j1Module* callback = nullptr);
+	Window* createWindow(int x, int y, SDL_Texture* texture, SDL_Rect section, j1Module* callback = nullptr, bool addToList = true);
 
 public:
 	bool UI_Debug = false;

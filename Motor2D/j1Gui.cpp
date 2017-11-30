@@ -194,66 +194,73 @@ const SDL_Texture* j1Gui::GetAtlas() const
 	return atlas;
 }
 
-Text* j1Gui::createText(char* text, int x, int y, _TTF_Font* font, SDL_Color color, j1Module* callback)
+Text* j1Gui::createText(char* text, int x, int y, _TTF_Font* font, SDL_Color color, j1Module* callback, bool addToList)
 {
 	Text* ret = new Text(text, x, y, font, color, callback);
-	UI_elements.add(ret);
+	if (addToList)
+		UI_elements.add(ret);
 	
 	return ret;
 }
 
-Image* j1Gui::createImage(int x, int y, SDL_Texture* texture, j1Module* callback)
+Image* j1Gui::createImage(int x, int y, SDL_Texture* texture, j1Module* callback, bool addToList)
 {
 	Image* ret = new Image(texture, x, y, {0, 0, 0, 0}, callback);
-	UI_elements.add(ret);
+	if (addToList)
+		UI_elements.add(ret);
 	
 	return ret;
 }
 
-Image* j1Gui::createImageFromAtlas(int x, int y, SDL_Rect section, j1Module* callback)
+Image* j1Gui::createImageFromAtlas(int x, int y, SDL_Rect section, j1Module* callback, bool addToList)
 {
 	Image* ret = new Image(atlas, x, y, section, callback);
-	UI_elements.add(ret);
+	if (addToList)
+		UI_elements.add(ret);
 
 	return ret;
 }
 
-Button* j1Gui::createCheckBox(int x, int y, SDL_Texture* texture, SDL_Rect standby, SDL_Rect OnClick, SDL_Rect Tick, j1Module* callback)
+Button* j1Gui::createCheckBox(int x, int y, SDL_Texture* texture, SDL_Rect standby, SDL_Rect OnClick, SDL_Rect Tick, j1Module* callback, bool addToList)
 {
 	SDL_Texture* usingTexture = (texture) ? texture : atlas;
 
 	Button* ret = new Button(x, y, usingTexture, standby, OnClick, Tick, CHECKBOX, callback);
-	UI_elements.add(ret);
+	if (addToList)
+		UI_elements.add(ret);
 
 	return ret;
 }
 
-InputBox* j1Gui::createInputBox(_TTF_Font* font, SDL_Color color, int x, int y, SDL_Texture * texture, SDL_Rect section, j1Module* callback)
+InputBox* j1Gui::createInputBox(_TTF_Font* font, SDL_Color color, int x, int y, SDL_Texture * texture, SDL_Rect section, j1Module* callback, bool addToList)
 {
 	SDL_Texture* usingTexture = (texture) ? texture : atlas;
 
 	InputBox* ret = new InputBox(font, color, x, y, usingTexture, section, callback);
-	UI_elements.add(ret);
+	if (addToList)
+		UI_elements.add(ret);
 
 	return ret;
 }
 
-Window* j1Gui::createWindow(int x, int y, SDL_Texture * texture, SDL_Rect section, j1Module * callback)
+Window* j1Gui::createWindow(int x, int y, SDL_Texture * texture, SDL_Rect section, j1Module * callback, bool addToList)
 {
 	SDL_Texture* usingTexture = (texture) ? texture : atlas;
 	
 	Window* ret = new Window(usingTexture, x, y, section, callback);
-	UI_elements.add(ret);
+	if (addToList)
+		UI_elements.add(ret);
 
 	return ret;
 }
 
-Button* j1Gui::createButton(int x, int y, SDL_Texture* texture, SDL_Rect standby, SDL_Rect OnMouse, SDL_Rect OnClick, j1Module* callback)
+Button* j1Gui::createButton(int x, int y, SDL_Texture* texture, SDL_Rect standby, SDL_Rect OnMouse, SDL_Rect OnClick, j1Module* callback, bool addToList)
 {
 	SDL_Texture* usingTexture = (texture) ? texture : atlas;
 	
 	Button* ret = new Button(x, y, usingTexture, standby, OnMouse, OnClick, LINK, callback);
-	UI_elements.add(ret);
+	if (addToList)
+		UI_elements.add(ret);
 	
 	return ret;
 }
