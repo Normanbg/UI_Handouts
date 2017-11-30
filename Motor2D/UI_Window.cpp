@@ -1,8 +1,10 @@
+#include "j1App.h"
 #include "UI_Window.h"
 #include "j1App.h"
 #include "j1Render.h"
 #include "p2Defs.h"
 #include "j1Gui.h"
+#include "j1Render.h"
 
 Window::~Window()
 {
@@ -26,5 +28,6 @@ void Window::appendChild(int x, int y, UI_element * child)
 
 void Window::BlitElement()
 {
-	App->render->Blit(texture, localPosition.x, localPosition.y, &section, false);
+	iPoint globalPos = calculateAbsolutePosition();
+	App->render->Blit(texture, globalPos.x, globalPos.y, &section, false);
 }

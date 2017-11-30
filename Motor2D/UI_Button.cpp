@@ -26,22 +26,23 @@ void Button::appendChild(int x, int y, UI_element * child)
 
 void Button::BlitElement()
 {
+	iPoint globalPos = calculateAbsolutePosition();
 	switch (state)
 	{
 	case STANDBY:
-		App->render->Blit(texture, localPosition.x, localPosition.y, &section, false);
+		App->render->Blit(texture, globalPos.x, globalPos.y, &section, false);
 		break;
 	case MOUSEOVER:
-		App->render->Blit(texture, localPosition.x, localPosition.y, &OnMouse, false);
+		App->render->Blit(texture, globalPos.x, globalPos.y, &OnMouse, false);
 		break;
 	case CLICKED:
-		App->render->Blit(texture, localPosition.x, localPosition.y, &OnClick, false);
+		App->render->Blit(texture, globalPos.x, globalPos.y, &OnClick, false);
 		break;
 	}
 
 	if (type == CHECKBOX && tick)
 	{
-		App->render->Blit(texture, localPosition.x, localPosition.y, &Tick, false);
+		App->render->Blit(texture, globalPos.x, globalPos.y, &Tick, false);
 	}
 	else if (type == LINK && text != nullptr)
 	{		
