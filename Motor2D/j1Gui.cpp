@@ -11,6 +11,7 @@
 #include "UI_Text.h"
 #include "UI_Button.h"
 #include "UI_InputBox.h"
+#include "UI_Window.h"
 
 j1Gui::j1Gui() : j1Module()
 {
@@ -214,6 +215,16 @@ InputBox* j1Gui::createInputBox(_TTF_Font* font, SDL_Color color, int x, int y, 
 	SDL_Texture* usingTexture = (texture) ? texture : atlas;
 
 	InputBox* ret = new InputBox(font, color, x, y, usingTexture, section, callback);
+	UI_elements.add(ret);
+
+	return ret;
+}
+
+Window* j1Gui::createWindow(int x, int y, SDL_Texture * texture, SDL_Rect section, j1Module * callback)
+{
+	SDL_Texture* usingTexture = (texture) ? texture : atlas;
+	
+	Window* ret = new Window(usingTexture, x, y, section, callback);
 	UI_elements.add(ret);
 
 	return ret;
