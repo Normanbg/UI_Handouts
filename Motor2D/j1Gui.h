@@ -54,9 +54,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	// TODO 2: Create the factory methods
+	void DebugDraw();
 	// Gui creation functions
-
 	const SDL_Texture* GetAtlas() const;
 	Text* createText(char* text, int x, int y, _TTF_Font* font, SDL_Color color = { 255, 255, 255, 255 }, j1Module* callback = nullptr);
 	Image* createImage(int x, int y, SDL_Texture* texture, j1Module* callback = nullptr);
@@ -69,6 +68,9 @@ public:
 	InputBox* createInputBox(_TTF_Font* font, SDL_Color color, int x, int y, SDL_Texture* texture, SDL_Rect section, j1Module* callback = nullptr);
 
 	Window* createWindow(int x, int y, SDL_Texture* texture, SDL_Rect section, j1Module* callback = nullptr);
+
+public:
+	bool UI_Debug = false;
 
 private:
 
