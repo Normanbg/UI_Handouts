@@ -19,7 +19,6 @@ public:
 	void appendChild(int x, int y, UI_element* child);
 	void appendChildAtCenter(UI_element* child);
 	void BlitElement();
-
 public:
 
 	p2List<UI_element*> content;

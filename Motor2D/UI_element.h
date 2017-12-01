@@ -5,7 +5,9 @@
 #include "p2Point.h"
 #include "j1App.h"
 #include "j1Textures.h"
+#include "j1Input.h"
 #include "j1Gui.h"
+#include "SDL\include\SDL_mouse.h"
 
 struct SDL_Texture;
 
@@ -65,6 +67,16 @@ public:
 	virtual void BlitElement()
 	{}
 
+
+	void Mouse_Drag()
+	{
+		iPoint MousePos;
+		//iPoint globalPos = calculateAbsolutePosition();
+		App->input->GetMousePosition(MousePos.x, MousePos.y);
+		this->localPosition.x = (MousePos.x - Click_Pos.x);
+		this->localPosition.y = (MousePos.y - Click_Pos.y);
+		Click_Pos = MousePos;
+	}
 public:
 
 	SDL_Texture* texture = nullptr;
@@ -75,6 +87,9 @@ public:
 	j1Module* callback = nullptr;
 	UI_element* parent = nullptr;
 	bool hovering = false;
+	
+protected:
+	iPoint Click_Pos{ 0,0 };
 };
 
 #endif // !__UI_ELEMENT__

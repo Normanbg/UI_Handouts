@@ -55,6 +55,8 @@ public:
 	bool CleanUp();
 
 	void DebugDraw();
+
+	void Mouse_Drag();
 	// Gui creation functions
 	const SDL_Texture* GetAtlas() const;
 	Text* createText(char* text, int x, int y, _TTF_Font* font, SDL_Color color = { 255, 255, 255, 255 }, j1Module* callback = nullptr);

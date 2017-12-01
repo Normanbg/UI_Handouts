@@ -62,6 +62,11 @@ bool j1Gui::PreUpdate()
 			{
 				if (item->data->callback != nullptr)
 					item->data->callback->OnUIEvent(item->data, MOUSE_LEFT_CLICK);
+				//Move for the window
+				if (item->data->element_type == WINDOW)
+				{
+					item->data->Mouse_Drag();
+				}
 			}
 			else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
 			{
@@ -95,8 +100,6 @@ bool j1Gui::PreUpdate()
 
 bool j1Gui::Update(float dt)
 {
-	
-
 	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
 		UI_Debug = !UI_Debug;
 
@@ -156,6 +159,7 @@ void j1Gui::DebugDraw()
 	}
 
 }
+
 // const getter for atlas
 const SDL_Texture* j1Gui::GetAtlas() const
 {
