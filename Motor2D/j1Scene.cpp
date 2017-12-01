@@ -144,6 +144,11 @@ bool j1Scene::OnUIEvent(UI_element* element, event_type event_type)
 		element->state = MOUSEOVER;
 		if (element->dragable)
 			element->End_Drag();
+
+		if (element == (UI_element*)text)
+		{
+			text->setText("Hovering ");
+		}
 	}
 	else if (event_type == MOUSE_RIGHT_CLICK)
 	{
@@ -154,6 +159,10 @@ bool j1Scene::OnUIEvent(UI_element* element, event_type event_type)
 	}
 	else if (event_type == MOUSE_RIGHT_RELEASE)
 	{
+		if (element == (UI_element*)text)
+		{
+			text->setText("Hovering ");
+		}
 	}
 
 	return true;
