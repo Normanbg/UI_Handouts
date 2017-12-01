@@ -11,7 +11,9 @@ public:
 	{}
 
 	Window(SDL_Texture* texture, int x, int y, SDL_Rect section, j1Module* callback): UI_element(x, y, element_type::WINDOW, section, callback, texture)
-	{}
+	{
+		dragable = true;
+	}
 
 	~Window()
 	{}

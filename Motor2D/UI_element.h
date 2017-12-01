@@ -57,7 +57,7 @@ public:
 		else
 			return localPosition;
 	}
-
+	
 	virtual void appendChild(int x, int y, UI_element* child)
 	{}
 
@@ -67,19 +67,35 @@ public:
 	virtual void BlitElement()
 	{}
 
-
 	void Mouse_Drag()
 	{
-		iPoint MousePos;
-		//iPoint globalPos = calculateAbsolutePosition();
-		App->input->GetMousePosition(MousePos.x, MousePos.y);
-		this->localPosition.x = (MousePos.x - Click_Pos.x);
-		this->localPosition.y = (MousePos.y - Click_Pos.y);
-		Click_Pos = MousePos;
+		iPoint Mouse_Movement;
+		App->input->GetMousePosition(Mouse_Movement.x, Mouse_Movement.y);
+		localPosition.x += (Mouse_Movement.x - Click_Pos.x);
+		localPosition.y += (Mouse_Movement.y - Click_Pos.y);
+
+		Click_Pos = Mouse_Movement;
 	}
+
+	void Start_Drag()
+	{
+		iPoint Mouse_Movement;
+		App->input->GetMousePosition(Mouse_Movement.x, Mouse_Movement.y);
+		Click_Pos = Mouse_Movement;
+
+		moving = true;
+	}
+
+	void End_Drag()
+	{
+		Click_Pos = { 0,0 };
+		moving = false;
+	}
+
 public:
 
 	SDL_Texture* texture = nullptr;
+	iPoint absolutePosition;
 	iPoint localPosition;
 	SDL_Rect section;
 	element_type element_type;
@@ -87,9 +103,12 @@ public:
 	j1Module* callback = nullptr;
 	UI_element* parent = nullptr;
 	bool hovering = false;
-	
+	bool moving = false;
+	bool dragable = false;
+
 protected:
 	iPoint Click_Pos{ 0,0 };
+	iPoint Displace{ 0,0 };
 };
 
 #endif // !__UI_ELEMENT__

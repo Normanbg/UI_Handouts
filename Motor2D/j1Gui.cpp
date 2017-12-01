@@ -47,41 +47,50 @@ bool j1Gui::PreUpdate()
 	//Send events related to UI elements
 	int x, y;
 	App->input->GetMousePosition(x, y);
-	for (p2List_item<UI_element*>* item = UI_elements.start; item; item = item->next)
+	bool onDragableElement = false;
+	for (p2List_item<UI_element*>* item = UI_elements.end; item; item = item->prev)
 	{
 		iPoint globalPos = item->data->calculateAbsolutePosition();
-		if (x > globalPos.x && x < globalPos.x + item->data->section.w && y > globalPos.y && y < globalPos.y + item->data->section.h)
+		if (x > globalPos.x && x < globalPos.x + item->data->section.w && y > globalPos.y && y < globalPos.y + item->data->section.h && !onDragableElement)
 		{
+			if (item->data->dragable)
+				onDragableElement = true;
+
 			if (!item->data->hovering)
 			{
 				item->data->hovering = true;
 				if (item->data->callback != nullptr)
+				{
 					item->data->callback->OnUIEvent(item->data, MOUSE_ENTER);
+				}
 			}
 			else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
 				if (item->data->callback != nullptr)
-					item->data->callback->OnUIEvent(item->data, MOUSE_LEFT_CLICK);
-				//Move for the window
-				if (item->data->element_type == WINDOW)
 				{
-					item->data->Mouse_Drag();
+					item->data->callback->OnUIEvent(item->data, MOUSE_LEFT_CLICK);
 				}
 			}
 			else if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
 			{
 				if (item->data->callback != nullptr)
+				{
 					item->data->callback->OnUIEvent(item->data, MOUSE_LEFT_RELEASE);
+				}
 			}
 			else if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 			{
 				if (item->data->callback != nullptr)
+				{
 					item->data->callback->OnUIEvent(item->data, MOUSE_RIGHT_CLICK);
+				}
 			}
 			else if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_UP)
 			{
 				if (item->data->callback != nullptr)
+				{
 					item->data->callback->OnUIEvent(item->data, MOUSE_RIGHT_RELEASE);
+				}
 			}
 		}
 		else
@@ -95,6 +104,7 @@ bool j1Gui::PreUpdate()
 		}
 	}
 
+	
 	return true;
 }
 
@@ -111,12 +121,16 @@ bool j1Gui::PostUpdate()
 {	
 	for (p2List_item<UI_element*>* item = UI_elements.start; item; item = item->next)
 	{
+		if (item->data->moving)
+			item->data->Mouse_Drag();
+
 		if (item->data->parent == nullptr)
 			item->data->BlitElement();
 	}
 
 	if (UI_Debug)
 		DebugDraw();
+
 	/*for (p2List_item<inputBox*>* item = inputTexts.start; item; item = item->next) //Input Text reading
 	{
 		if (item->data->reading)
