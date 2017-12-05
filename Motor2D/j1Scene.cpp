@@ -8,11 +8,14 @@
 #include "j1Window.h"
 #include "j1Map.h"
 #include "j1PathFinding.h"
+#include "p2List.h"
 #include "j1Gui.h"
 #include "j1Scene.h"
 #include "j1Fonts.h"
 #include "UI_element.h"
 #include "UI_Text.h"
+#include "UI_Image.h"
+#include "UI_InputBox.h"
 #include "UI_Button.h"
 #include "UI_Window.h"
 #include "UI_Text.h"
@@ -51,6 +54,9 @@ bool j1Scene::Start()
 	window->appendChild(100, 100, button);
 	text = App->gui->createText("Hello World", 120, 80, text_font, text_color, this);
 	window->appendChild(100, 20, text);
+	InputBox* inputBox = App->gui->createInputBox(text_font, text_color, 0, 0, NULL, { 490, 637,343,60 }, this);
+	window->appendChild(50, 200, inputBox);
+
 	//Window (22, 532, 440, 470)
 
 	/*App->gui->createImageFromAtlas(10, 10, { 230, 19, 179, 80 }); //Wow Logo
@@ -131,6 +137,10 @@ bool j1Scene::OnUIEvent(UI_element* element, event_type event_type)
 	}
 	else if (event_type == MOUSE_LEFT_CLICK)
 	{
+		if (element->element_type == WINDOW)
+		{
+		//Add focus here
+		}
 		element->state = CLICKED;
 		if (element == (UI_element*)text)
 		{

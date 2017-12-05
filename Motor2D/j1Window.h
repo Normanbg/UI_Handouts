@@ -2,6 +2,7 @@
 #define __j1WINDOW_H__
 
 #include "j1Module.h"
+#include "p2List.h"
 
 struct SDL_Window;
 struct SDL_Surface;
@@ -33,7 +34,7 @@ public:
 public:
 	//The window we'll be rendering to
 	SDL_Window* window;
-
+	
 	//The surface contained by the window
 	SDL_Surface* screen_surface;
 
@@ -42,6 +43,7 @@ private:
 	uint		width;
 	uint		height;
 	uint		scale;
+
 };
 
 #endif // __j1WINDOW_H__
